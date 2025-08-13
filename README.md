@@ -1,86 +1,129 @@
-# Telecom_X_prevendo_churn_partII
 
-## Projeto de Análise de Churn de Clientes
+# Telecom_X_Murilo_Parte2
 
 ### 1. Objetivo
 
-Este projeto tem como objetivo analisar os dados de churn de clientes de uma empresa de telecomunicações para identificar os principais fatores que contribuem para o cancelamento de contratos. O objetivo final é desenvolver um modelo de machine learning que possa prever com precisão quais clientes têm maior probabilidade de cancelar, permitindo que a empresa tome medidas proativas para reter esses clientes.
+Este projeto tem como objetivo analisar os dados de churn de clientes de uma empresa de telecomunicações, identificando os principais fatores que contribuem para o cancelamento de contratos. A meta final é desenvolver um modelo de machine learning capaz de prever com precisão quais clientes têm maior probabilidade de cancelar, permitindo que a empresa tome medidas proativas para retenção.
 
 ### 2. Ferramentas e Tecnologias
 
-*   **Linguagem de Programação:** Python
-*   **Bibliotecas:**
-    *   **Pandas:** Para manipulação e análise de dados tabulares.
-    *   **NumPy:** Para cálculos numéricos.
-    *   **Scikit-learn:** Para modelagem de machine learning, incluindo divisão de dados, modelos de classificação e métricas de avaliação.
-    *   **Matplotlib e Seaborn:** Para visualização de dados.
-    *   **Plotly:** Para criação de gráficos interativos.
-    *   **imbalanced-learn (imblearn):** Para lidar com dados desbalanceados usando técnicas como SMOTE.
+-   **Linguagem de Programação:** Python
+    
+-   **Bibliotecas Utilizadas:**
+    
+    -   **Pandas:** Manipulação e análise de dados tabulares
+        
+    -   **NumPy:** Cálculos numéricos
+        
+    -   **Scikit-learn:** Modelagem de machine learning, divisão de dados, classificação e métricas
+        
+    -   **Matplotlib e Seaborn:** Visualização de dados
+        
+    -   **Plotly:** Gráficos interativos
+        
+    -   **imbalanced-learn (imblearn):** Técnicas para lidar com dados desbalanceados, como SMOTE
+        
 
-### 3. Fontes de Dados
+### 3. Fonte de Dados
 
-Os dados utilizados neste projeto foram obtidos a partir de um arquivo JSON (`https://raw.githubusercontent.com/sthemonica/alura-voz/refs/heads/main/Dados/Telco-Customer-Churn.json`) contendo informações sobre clientes, seus planos, seus dados demográficos e seu status de cancelamento.
+Os dados foram obtidos a partir de um arquivo JSON: `Telco-Customer-Churn.json` O conjunto inclui informações sobre clientes, planos, dados demográficos e status de cancelamento.
 
 ### 4. Processamento e Limpeza dos Dados
 
-O processo de preparação dos dados envolveu as seguintes etapas:
+Etapas realizadas:
 
-1.  **Carregamento dos Dados:** Os dados foram carregados a partir do arquivo JSON usando a biblioteca Pandas.
-2.  **Desaninhamento:** As colunas que continham dados JSON aninhados (como `customer`, `phone`, `internet` e `account`) foram desaninhadas usando a função `json_normalize`.
-3.  **Tratamento de Valores Ausentes:** Os valores ausentes foram preenchidos com a média das respectivas colunas.
-5.  **Remoção de Duplicatas:** Linhas duplicadas foram removidas do conjunto de dados.
-6.  **Correção de Tipos de Dados:** Os tipos de dados de algumas colunas foram corrigidos (por exemplo, a coluna `Charges.Total` foi convertida para o tipo `float`).
-7.  **Tratamento de Inconsistências:** Inconsistências nos dados categóricos foram corrigidas (por exemplo, strings vazias na coluna `Churn`).
+1.  **Carregamento:** Utilizando Pandas
+    
+2.  **Desaninhamento:** Uso de `json_normalize` para colunas com dados aninhados (`customer`, `phone`, `internet`, `account`)
+    
+3.  **Tratamento de Valores Ausentes:** Preenchimento com médias
+    
+4.  **Remoção de Duplicatas**
+    
+5.  **Correção de Tipos de Dados:** Ex: `Charges.Total` convertido para `float`
+    
+6.  **Tratamento de Inconsistências:** Correção de valores categóricos inválidos (ex: strings vazias em `Churn`)
+    
 
 ### 5. Feature Engineering
 
-Novas features foram criadas para capturar informações mais relevantes sobre os clientes:
+Novas variáveis criadas:
 
-*   `Contrato_Internet`: Combinou as informações sobre o tipo de contrato e o serviço de internet.
-*   `Total_Servicos`: Contou o número de serviços adicionais que o cliente possui (segurança online, backup online, etc.).
-*   `Streaming_Internet`: Combinou as informações sobre o uso de serviços de streaming de TV e filmes.
-*   `Charge_Tempo_Ratio`: Calculou a razão entre as cobranças mensais e o tempo de contrato.
-*   `Idoso_Com_Dependentes`: Indicou se o cliente é idoso e tem dependentes.
+-   `Contrato_Internet`: Combinação do tipo de contrato com serviço de internet
+    
+-   `Total_Servicos`: Contagem de serviços adicionais (segurança online, backup, etc.)
+    
+-   `Streaming_Internet`: Combinação de uso de streaming de TV e filmes
+    
+-   `Charge_Tempo_Ratio`: Razão entre cobrança mensal e tempo de contrato
+    
+-   `Idoso_Com_Dependentes`: Indica se o cliente é idoso e possui dependentes
+    
 
 ### 6. Modelagem
 
-1.  **Seleção do Modelo:** Um modelo RandomForest foi escolhido para prever o churn devido à sua capacidade de lidar com dados não lineares e sua interpretabilidade.
-2.  **Divisão dos Dados:** Os dados foram divididos em conjuntos de treino e teste (80/20).
-3.  **Tratamento de Desbalanceamento:** A técnica SMOTE (Synthetic Minority Oversampling Technique) foi utilizada para lidar com o desbalanceamento dos dados, gerando amostras sintéticas da classe minoritária (Churn = Sim).
-4.  **Treinamento do Modelo:** O modelo RandomForest foi treinado com os dados de treino balanceados.
-5.  **Avaliação do Modelo:** O modelo foi avaliado usando validação cruzada estratificada e as seguintes métricas:
-    *   Acurácia
-    *   Precisão
-    *   Recall
-    *   F1-Score
-    *   AUC (Area Under the Curve)
-    *   Matriz de Confusão
+1.  **Modelo Escolhido:** RandomForest, pela capacidade de lidar com dados não lineares e boa interpretabilidade
+    
+2.  **Divisão dos Dados:** Treino e teste (80/20)
+    
+3.  **Balanceamento:** Aplicação de SMOTE para gerar amostras sintéticas da classe minoritária (`Churn = Sim`)
+    
+4.  **Treinamento:** Modelo treinado com dados balanceados
+    
+5.  **Avaliação:** Validação cruzada estratificada com métricas:
+    
+    -   Acurácia
+        
+    -   Precisão
+        
+    -   Recall
+        
+    -   F1-Score
+        
+    -   AUC
+        
+    -   Matriz de Confusão
+        
 
 ### 7. Resultados
 
-Após experimentar diferentes configurações e ajustar o limiar de decisão, o modelo com o melhor desempenho foi aquele que priorizou o **recall** para a classe "Cancelou". Este modelo apresentou os seguintes resultados:
+O modelo com melhor desempenho priorizou o **recall** para a classe "Cancelou", com os seguintes resultados:
 
-*   **AUC: 0.826**
-*   **Relatório de Classificação:**
+-   **AUC:** 0.826
+    
+-   **Relatório de Classificação:**
+    
 
-    | Métrica      | 0.0 (Não Cancelou) | 1.0 (Cancelou) |
-    | :----------- | :------------------- | :-------------- |
-    | Precisão     | 0.89                 | 0.53            |
-    | Recall       | 0.76                 | 0.74            |
-    | F1-Score     | 0.82                 | 0.62            |
+Métrica
 
-O ponto crucial aqui é o *recall* de 0.74 para a classe "Cancelou". Isso significa que o modelo é capaz de identificar 74% dos clientes que realmente cancelam, o que é valioso para implementar estratégias de retenção eficazes.
+0.0 (Não Cancelou)
+
+1.0 (Cancelou)
+
+Precisão
+
+0.89
+
+0.53
+
+Recall
+
+0.76
+
+0.74
+
+F1-Score
+
+0.82
+
+0.62
+
+O destaque é o _recall_ de 0.74 para clientes que cancelaram, permitindo ações mais eficazes de retenção.
 
 ### 8. Conclusão
 
-O modelo desenvolvido neste projeto é capaz de prever o churn de clientes com uma precisão razoável e um bom recall. Ao priorizar o recall, podemos identificar a maioria dos clientes que têm probabilidade de cancelar e tomar medidas proativas para retê-los.
+O modelo desenvolvido apresenta bom desempenho na previsão de churn, com foco em recall para identificar clientes em risco. Futuras melhorias podem incluir:
 
-Embora o modelo já apresente um bom desempenho, há espaço para melhorias. Futuras pesquisas podem se concentrar em:
-
-*   Explorar outros modelos de machine learning.
-*   Incorporar mais dados (e.g., tipo de assinatura, valor do produto).
-*   Ajustar os pesos das classes para equilibrar ainda mais a precisão e o recall.
-
-
-```
-
+-   Testes com outros algoritmos de machine learning
+    
+-   Inclusão de novas variáveis (ex: tipo de assinatura, valor do produto)
